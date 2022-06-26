@@ -12,13 +12,24 @@
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC DROP SCHEMA IF EXISTS ae_england CASCADE;
-# MAGIC CREATE SCHEMA ae_england;
-# MAGIC USE ae_england;
+# Test S3 access works
+dbutils.fs.ls(f"s3a://{sources_bucket_name}")
+dbutils.fs.ls(f"s3a://{tables_bucket_name}")
 
 # COMMAND ----------
 
-dbutils.fs.unmount(mount_path)
-dbutils.fs.mount("s3a://%s" % aws_bucket_name, mount_path)
-dbutils.fs.ls(england_file)
+# MAGIC %sql
+# MAGIC DROP SCHEMA IF EXISTS nhs_ae_attendance CASCADE;
+# MAGIC CREATE SCHEMA nhs_ae_attendance;
+# MAGIC USE nhs_ae_attendance;
+
+# COMMAND ----------
+
+try:
+    dbutils.fs.unmount("/mnt/sources")
+    dbutils.fs.unmount("/mnt/tables")
+except:
+    pass
+
+dbutils.fs.mount("s3a://%s" % sources_bucket_name, "/mnt/sources")
+dbutils.fs.mount("s3a://%s" % tables_bucket_name, "/mnt/tables")

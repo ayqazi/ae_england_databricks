@@ -1,6 +1,6 @@
 # Databricks notebook source
 # config
-aws_bucket_name = "a1b1limited-eu-west-1-data-sources"
-mount_path = "/mnt/sources"
-tables_path = mount_path + "/tables"
-england_file = mount_path + "/a&e-england/AE_attendances_england_monthly.csv"
+sources_bucket_name = "com-cloudership-eu-west-1-databricks-training-sources"
+tables_bucket_name = "com-cloudership-eu-west-1-databricks-training-tables"
+sources_path = "/mnt/sources/nhs_ae_attendance"
+tables_path = "/mnt/tables/nhs_ae_attendance"

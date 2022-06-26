@@ -16,24 +16,23 @@
 
 # COMMAND ----------
 
-dbutils.fs.rm("/mnt/sources/tables/ae_england/en_silver.delta", recurse=True)
+spark.sql("DROP TABLE IF EXISTS en_silver")
+dbutils.fs.rm(f"{tables_path}/en_silver.delta", recurse=True)
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC 
-# MAGIC DROP TABLE IF EXISTS en_silver;
 # MAGIC CREATE TABLE en_silver
 # MAGIC   USING DELTA
 # MAGIC   TBLPROPERTIES ("delta.columnMapping.mode" = "name")
-# MAGIC   LOCATION '/mnt/sources/tables/ae_england/en_silver.delta'
+# MAGIC   LOCATION '/mnt/tables/nhs_ae_attendance/en_silver.delta'
 # MAGIC   AS SELECT
-# MAGIC     cast(_c0 AS INT) AS row_index,
-# MAGIC     cast(`date` AS DATE) AS recorded_date,
-# MAGIC     Name AS hospital_name,
-# MAGIC     `Type 1 Departments - Major A&E` AS major_ae_count_orig,
-# MAGIC     cast(`Type 1 Departments - Major A&E` AS INT) AS major_ae_count
-# MAGIC     
+# MAGIC       cast(_c0 AS INT) AS row_index,
+# MAGIC       cast(`date` AS DATE) AS recorded_date,
+# MAGIC       Name AS hospital_name,
+# MAGIC       `Type 1 Departments - Major A&E` AS major_ae_count_orig,
+# MAGIC       cast(`Type 1 Departments - Major A&E` AS INT) AS major_ae_count
 # MAGIC     FROM en_bronze;
 
 # COMMAND ----------
